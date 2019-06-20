@@ -14,12 +14,13 @@ class DoublyLinkedList {
   }
   push(val) {
     let newNode = new Node(val);
-    if (!this.head) {
+    if (this.length === 0) {
       this.head = newNode;
       this.tail = newNode;
     } else {
       this.tail.next = newNode;
       newNode.prev = this.tail;
+      this.tail = newNode;
     }
     this.length++;
     return this;
@@ -38,9 +39,53 @@ class DoublyLinkedList {
     this.length--;
     return poppedNode;
   }
+  shift() {
+    if (this.length === 0) return undefined;
+    var oldHead = this.head;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = oldHead.next;
+      this.head.prev = null;
+      oldHead.next = null;
+    }
+    this.length--;
+    return oldHead;
+  }
+  unshift(val) {
+    let newNode = new Node(val);
+    if (this.length === 0) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      this.head.prev = newNode;
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+    this.length++;
+    return this;
+  }
+  // get(index) {
+  //   if (index < 0 || index >= this.length) return null;
+  //   let half = Math.floor(this.length / 2);
+  //   if (index <= half) {
+  //     let node = this.head;
+  //     for (let i = 0; i <= index; i++) {
+  //       node = node.next;
+  //     }
+  //     return node;
+  //   } else {
+  //     let node = this.tail;
+  //     for (let i = this.length - 1; i >= index; i--) {
+  //       node = node.prev;
+  //     }
+  //     return node;
+  //   }
+  // }
 }
 
-let list = new DoublyLinkedList();
-list.push(1);
-list.push(22);
-list.push(333);
+var list = new DoublyLinkedList();
+list.push('Harry');
+list.push('Ron');
+list.push('Hermione');
